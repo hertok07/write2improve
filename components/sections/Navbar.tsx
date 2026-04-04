@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { NAV_LINKS } from "@/lib/content"
+import { useLang } from "@/lib/i18n"
 import { Button } from "@/components/ui/Button"
 
 export function Navbar() {
+  const { lang, setLang, t } = useLang()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -38,7 +39,7 @@ export function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
+            {t.nav.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -49,10 +50,33 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* CTA */}
-          <div className="hidden md:block">
+          {/* Right: lang switcher + CTA */}
+          <div className="hidden md:flex items-center gap-4">
+            {/* Language switcher */}
+            <div className="flex items-center rounded-lg border border-neutral-200 overflow-hidden text-sm font-medium">
+              <button
+                onClick={() => setLang("es")}
+                className={`px-3 py-1.5 transition-colors ${
+                  lang === "es"
+                    ? "bg-brand-600 text-white"
+                    : "text-neutral-500 hover:text-neutral-950 hover:bg-neutral-50"
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`px-3 py-1.5 transition-colors ${
+                  lang === "en"
+                    ? "bg-brand-600 text-white"
+                    : "text-neutral-500 hover:text-neutral-950 hover:bg-neutral-50"
+                }`}
+              >
+                EN
+              </button>
+            </div>
             <Button variant="primary" size="sm" href="#contacto">
-              Solicitar demo
+              {t.site.ctaPrimary}
             </Button>
           </div>
 
@@ -78,7 +102,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden bg-white border-t border-neutral-100 px-6 py-4 flex flex-col gap-4">
-          {NAV_LINKS.map((link) => (
+          {t.nav.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -88,8 +112,31 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
+          {/* Language switcher mobile */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setLang("es")}
+              className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+                lang === "es"
+                  ? "bg-brand-600 text-white border-brand-600"
+                  : "text-neutral-500 border-neutral-200 hover:border-neutral-400"
+              }`}
+            >
+              ES
+            </button>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-4 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+                lang === "en"
+                  ? "bg-brand-600 text-white border-brand-600"
+                  : "text-neutral-500 border-neutral-200 hover:border-neutral-400"
+              }`}
+            >
+              EN
+            </button>
+          </div>
           <Button variant="primary" size="sm" href="#contacto">
-            Solicitar demo
+            {t.site.ctaPrimary}
           </Button>
         </div>
       )}

@@ -1,13 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { SITE } from "@/lib/content"
-
 export const metadata: Metadata = {
   title: "Contacto — Write2Improve",
   description: "Contacta con Write2Improve para solicitar información o una demo.",
 }
 
 export default function ContactoPage() {
+  const contact = "info@write2improve.com"
   return (
     <div className="flex min-h-screen items-center justify-center pt-16">
       <div className="text-center px-6">
@@ -21,10 +20,10 @@ export default function ContactoPage() {
           Escríbenos y te respondemos en menos de 24 horas.
         </p>
         <a
-          href={`mailto:${SITE.contact}`}
+          href={`mailto:${contact}`}
           className="inline-flex items-center justify-center rounded-lg bg-brand-600 text-white px-6 py-3 font-medium hover:bg-brand-700 transition-colors"
         >
-          {SITE.contact}
+          {contact}
         </a>
         <div className="mt-6">
           <Link

@@ -1,13 +1,17 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
-import { SITE } from "@/lib/content"
+import { useLang } from "@/lib/i18n"
+
+const HREFS = ["/academias", "/alumnos", "/precios", "/contacto"]
 
 export function Footer() {
+  const { t } = useLang()
+
   return (
     <footer className="border-t border-neutral-200 bg-white">
       <div className="mx-auto max-w-6xl px-6 py-12">
-
-        {/* Logo centrado grande */}
         <div className="flex flex-col items-center mb-8">
           <Link href="/">
             <Image
@@ -20,30 +24,19 @@ export function Footer() {
           </Link>
         </div>
 
-        {/* Nav links */}
         <nav className="flex flex-wrap justify-center gap-6 text-sm text-neutral-500 mb-6">
-          <Link href="/academias" className="hover:text-neutral-950 transition-colors">
-            Academias
-          </Link>
-          <Link href="/alumnos" className="hover:text-neutral-950 transition-colors">
-            Alumnos
-          </Link>
-          <Link href="/precios" className="hover:text-neutral-950 transition-colors">
-            Precios
-          </Link>
-          <Link href="/contacto" className="hover:text-neutral-950 transition-colors">
-            Contacto
-          </Link>
+          {t.footer.links.map((label, i) => (
+            <Link key={label} href={HREFS[i]} className="hover:text-neutral-950 transition-colors">
+              {label}
+            </Link>
+          ))}
         </nav>
 
-        {/* Copyright + disclaimer */}
         <div className="border-t border-neutral-100 pt-6 flex flex-col items-center gap-2 text-center">
           <p className="text-sm text-neutral-400">
-            © {new Date().getFullYear()} {SITE.name}
+            © {new Date().getFullYear()} {t.site.name}
           </p>
-          <p className="text-xs text-neutral-400 max-w-md">
-            {SITE.disclaimer}
-          </p>
+          <p className="text-xs text-neutral-400 max-w-md">{t.site.disclaimer}</p>
         </div>
       </div>
     </footer>
